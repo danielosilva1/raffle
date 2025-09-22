@@ -3,7 +3,7 @@ import { NavbarButton } from "./navbar-button";
 
 export const Navbar = () => {
   return (
-    <nav className="fixed top-0 w-full px-4 py-2 border-b bg-blue-100 flex items-center md:h-14">
+    <nav className="w-full px-4 py-2 border-b bg-blue-100 flex items-center md:h-14">
       <div
         className="
             flex flex-col space-y-2 mx-auto w-full
@@ -31,7 +31,7 @@ export const Navbar = () => {
 
           <NavbarButton
             label="Criar rifa"
-            href="/"
+            href="/add-raffle"
             icon={Plus}
             className="bg-green-800 text-white hover:bg-green-800/90           "
           />
