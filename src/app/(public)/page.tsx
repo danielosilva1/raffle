@@ -1,5 +1,11 @@
 import { Plus, Search } from "lucide-react";
+import { Metadata } from "next";
 import Link from "next/link";
+
+export const metadata: Metadata = {
+  title: "Início",
+  description: "Página inicial",
+};
 
 export default function Home() {
   return (
