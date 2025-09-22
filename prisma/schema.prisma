@@ -14,8 +14,35 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id String @id @default(uuid())
-  firstName String
-  lastName String
+model Raffle {
+  id                   String         @id @default(uuid()) @map("raffle_pk")
+  title                String
+  description          String
+  award                String
+  organizerName        String         @map("organizer_name")
+  organizerPhoneNumber String         @map("organizer_phone_number")
+  pixKey               String         @map("pix_key")
+  pixHolderName        String         @map("pix_holder_name")
+  numberQuantity       Int            @map("number_quantity")
+  numberPrice          Float          @map("number_price")
+  drawDate             DateTime?      @map("draw_date")
+  status               String
+  drawnNumber          Int?           @map("drawn_number")
+  additionalInfo       String?        @map("additional_info")
+  allowCashPayment     Boolean        @default(true)
+  raffleNumbers        RaffleNumber[]
+
+  @@map("raffle")
+}
+
+model RaffleNumber {
+  id               String  @id @default(uuid()) @map("raffle_number_pk")
+  number           Int
+  status           String
+  buyerName        String? @map("buyer_name")
+  buyerPhoneNumber String? @map("buyer_phone_number")
+  raffleId         String  @map("raffle_pk")
+  raffle           Raffle  @relation(fields: [raffleId], references: [id])
+
+  @@map("raffle_number")
 }
