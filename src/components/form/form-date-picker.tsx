@@ -37,6 +37,7 @@ export const FormDatePicker = forwardRef<HTMLInputElement, FormDatePickerProps>(
             id={id}
             value={value}
             disabled={disabled || pending}
+            ref={ref}
             placeholder={placeholder}
             className={className}
           />
