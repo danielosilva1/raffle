@@ -1,3 +1,5 @@
+"use client";
+
 import { forwardRef } from "react";
 import { useFormStatus } from "react-dom";
 import { Label } from "@/components/ui/label";
@@ -37,13 +39,13 @@ export const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
     const { pending } = useFormStatus();
 
     return (
-      <div className="space-y-2">
+      <div className="space-y-2 w-full">
         <div className="space-y-1">
           {label && (
             <div className="">
               <Label
                 htmlFor={id}
-                className="text-xs font-semibold text-neutral-700"
+                className="text-sm font-semibold text-neutral-700"
               >
                 {label}
               </Label>
