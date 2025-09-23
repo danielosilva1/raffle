@@ -4,7 +4,7 @@ import { forwardRef } from "react";
 import { useFormStatus } from "react-dom";
 import { cn } from "@/lib/utils";
 import { FormErrors } from "./form-errors";
-import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label";
 
 interface FormCheckboxProps {
   id: string;
@@ -17,23 +17,25 @@ interface FormCheckboxProps {
   onBlur?: () => void;
 }
 
-export const FormCheckbox = forwardRef<HTMLDivElement, FormCheckboxProps>(
+export const FormCheckbox = forwardRef<HTMLInputElement, FormCheckboxProps>(
   ({ id, label, required, disabled, errors, className, checked }, ref) => {
     const { pending } = useFormStatus();
 
     return (
       <div
         className={cn("space-y-2 w-full text-sm text-neutral-700", className)}
-        ref={ref}
       >
         <div className="flex items-center space-x-2">
-          <Checkbox
+          <input
             id={id}
+            ref={ref}
+            name={id}
+            type="checkbox"
             disabled={disabled || pending}
             required={required}
             checked={checked}
           />
-          <span>{label}</span>
+          <Label htmlFor={id}>{label}</Label>
         </div>
         <FormErrors id={id} errors={errors} />
       </div>
