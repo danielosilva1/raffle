@@ -22,7 +22,7 @@ interface DatePickerProps {
   placeholder?: string;
 }
 
-export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
+export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
   ({ id, value, disabled, placeholder, className }, ref) => {
     const [open, setOpen] = React.useState(false);
     const [date, setDate] = React.useState<Date | undefined>(undefined);
@@ -34,7 +34,15 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
     }, [value]);
 
     return (
-      <div className="flex flex-col gap-3" ref={ref}>
+      <div className="flex flex-col gap-3">
+        <input
+          id={id}
+          name={id}
+          value={date ? date.toISOString() : ""}
+          ref={ref}
+          hidden
+          readOnly
+        />
         <Popover open={open} onOpenChange={setOpen}>
           <PopoverTrigger asChild>
             <Button
