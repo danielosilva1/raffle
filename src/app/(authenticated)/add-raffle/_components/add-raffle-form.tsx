@@ -16,8 +16,10 @@ export const AddRaffleForm = () => {
   const [state, formAction] = useActionState<FormState, FormData>(
     createRaffle,
     {
+      success: null,
+      message: null,
       data: null,
-      errors: {},
+      fieldErrors: {},
     }
   );
 
@@ -32,21 +34,21 @@ export const AddRaffleForm = () => {
         label="Título*"
         className="h-8 border border-blue-200"
         placeholder="Título da rifa..."
-        errors={state.errors}
+        errors={state.fieldErrors}
       />
       <FormTextarea
         id="description"
         label="Descrição*"
         className="border border-blue-200"
         placeholder="Descreva o motivo da rifa, a causa envolvida e as regras para participar..."
-        errors={state.errors}
+        errors={state.fieldErrors}
       />
       <FormTextarea
         id="award"
         label="Premiação*"
         className="border border-blue-200"
         placeholder="Descreva o que será premiado"
-        errors={state.errors}
+        errors={state.fieldErrors}
       />
 
       <div
@@ -60,7 +62,7 @@ export const AddRaffleForm = () => {
           label="Organizador(a)*"
           className="h-8 border border-blue-200 w-full"
           placeholder="Nome do(a) organizador(a)"
-          errors={state.errors}
+          errors={state.fieldErrors}
         />
 
         <FormPhoneInput
@@ -68,7 +70,7 @@ export const AddRaffleForm = () => {
           label="WhatsApp do(a) organizador(a)*"
           className="h-8 border border-blue-200"
           placeholder="(XX) 9XXXX-XXXX"
-          errors={state.errors}
+          errors={state.fieldErrors}
         />
       </div>
 
@@ -83,14 +85,14 @@ export const AddRaffleForm = () => {
           label="Chave PIX*"
           className="h-8 border border-blue-200 w-full"
           placeholder="Chave PIX para pagamento"
-          errors={state.errors}
+          errors={state.fieldErrors}
         />
         <FormInput
           id="pixHolderName"
           label="Nome do(a) titular*"
           className="h-8 border border-blue-200"
           placeholder="Nome do(a) titular do PIX"
-          errors={state.errors}
+          errors={state.fieldErrors}
         />
       </div>
 
@@ -105,14 +107,14 @@ export const AddRaffleForm = () => {
           label="Quantidade de números*"
           className="h-8 border border-blue-200 w-full"
           placeholder="Quantidade de números"
-          errors={state.errors}
+          errors={state.fieldErrors}
         />
         <FormCurrencyInput
           id="numberPrice"
           label="Preço do número (R$)*"
           className="h-8 border border-blue-200"
           placeholder="0,00"
-          errors={state.errors}
+          errors={state.fieldErrors}
         />
       </div>
 
@@ -127,12 +129,12 @@ export const AddRaffleForm = () => {
           label="Data do sorteio"
           className="h-8 bg-transparent border border-blue-200 w-full hover:bg-transparent"
           placeholder="Escolha uma data"
-          errors={state.errors}
+          errors={state.fieldErrors}
         />
         <FormCheckbox
           id="allowCashPayment"
           label="Aceita pagamento em dinheiro"
-          errors={state.errors}
+          errors={state.fieldErrors}
         />
       </div>
 
@@ -141,7 +143,7 @@ export const AddRaffleForm = () => {
         label="Informações adicionais"
         className="border border-blue-200"
         placeholder="Informe sobre as formas de pagamento, envio de comprovante de pagamento..."
-        errors={state.errors}
+        errors={state.fieldErrors}
       />
 
       <div className="flex flex-col space-y-2 justify-end mt-6 md:flex-row md:space-x-8">

@@ -4,7 +4,9 @@ import type { Raffle } from "@/generated/prisma";
 
 export interface FormState {
   data: Raffle | null;
-  errors: Record<string, string[] | undefined>;
+  success: boolean | null;
+  message: string | null;
+  fieldErrors: Record<string, string[] | undefined>;
 }
 
 export const CreateRaffle = z.object({
