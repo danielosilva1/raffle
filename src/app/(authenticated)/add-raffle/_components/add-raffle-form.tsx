@@ -10,7 +10,8 @@ import { FormTextarea } from "@/components/form/form-textarea";
 import { createRaffle } from "@/lib/actions/create-raffle/create-raffle";
 import { FormState } from "@/lib/actions/create-raffle/types";
 import Link from "next/link";
-import { useActionState } from "react";
+import { useActionState, useEffect } from "react";
+import { toast } from "sonner";
 
 export const AddRaffleForm = () => {
   const [state, formAction] = useActionState<FormState, FormData>(
@@ -22,6 +23,14 @@ export const AddRaffleForm = () => {
       fieldErrors: {},
     }
   );
+
+  useEffect(() => {
+    if (!state.success) {
+      toast.error(state.message);
+    } else {
+      toast.success(state.message);
+    }
+  }, [state.success, state.message]);
 
   return (
     <form

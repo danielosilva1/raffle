@@ -5,6 +5,7 @@ import { siteConfig } from "@/config/site";
 import { Navbar } from "@/components/navbar/navbar";
 import { Footer } from "@/components/footer";
 import { cn } from "@/lib/utils";
+import { Toaster } from "sonner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -49,6 +50,7 @@ export default function RootLayout({
           {children}
         </main>
         <Footer />
+        <Toaster />
       </body>
     </html>
   );
