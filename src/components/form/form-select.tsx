@@ -4,7 +4,6 @@ import { forwardRef } from "react";
 import { useFormStatus } from "react-dom";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
-import { FormErrors } from "./form-errors";
 import {
   Select,
   SelectContent,
@@ -12,6 +11,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { FormError } from "./form-error";
 
 interface Item {
   label: string;
@@ -25,7 +25,7 @@ interface FormSelectProps {
   placeholder?: string;
   required?: boolean;
   disabled?: boolean;
-  errors?: Record<string, string[] | undefined>;
+  error?: string;
   className?: string;
   value?: string;
 }
@@ -39,7 +39,7 @@ export const FormSelect = forwardRef<HTMLButtonElement, FormSelectProps>(
       placeholder,
       required,
       disabled,
-      errors,
+      error,
       className,
       value = "",
     },
@@ -80,7 +80,7 @@ export const FormSelect = forwardRef<HTMLButtonElement, FormSelectProps>(
             </SelectContent>
           </Select>
         </div>
-        <FormErrors id={id} errors={errors} />
+        <FormError id={id} error={error} />
       </div>
     );
   }

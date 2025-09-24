@@ -20,17 +20,17 @@ interface DatePickerProps {
   disabled?: boolean;
   className?: string;
   placeholder?: string;
+  onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;
+  onChange?: (value: string) => void;
 }
 
 export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
-  ({ id, value, disabled, placeholder, className }, ref) => {
+  ({ id, value, disabled, placeholder, className, onChange }, ref) => {
     const [open, setOpen] = React.useState(false);
     const [date, setDate] = React.useState<Date | undefined>(undefined);
 
     React.useEffect(() => {
-      if (value) {
-        setDate(new Date(value));
-      }
+      setDate(value ? new Date(value) : undefined);
     }, [value]);
 
     return (
@@ -42,6 +42,7 @@ export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
           ref={ref}
           hidden
           readOnly
+          onChange={(e) => onChange?.(e.target.value)}
         />
         <Popover open={open} onOpenChange={setOpen}>
           <PopoverTrigger asChild>
@@ -70,6 +71,7 @@ export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
               onSelect={(date) => {
                 setDate(date);
                 setOpen(false);
+                onChange?.(date?.toISOString() ?? "");
               }}
             />
           </PopoverContent>

@@ -1,11 +1,11 @@
 "use client";
 
-import { forwardRef } from "react";
+import { FocusEvent, forwardRef } from "react";
 import { useFormStatus } from "react-dom";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
-import { FormErrors } from "./form-errors";
 import { Textarea } from "@/components/ui/textarea";
+import { FormError } from "./form-error";
 
 interface FormTextareaProps {
   id: string;
@@ -13,10 +13,10 @@ interface FormTextareaProps {
   placeholder?: string;
   required?: boolean;
   disabled?: boolean;
-  errors?: Record<string, string[] | undefined>;
+  error?: string;
   className?: string;
   defaultValue?: string;
-  onBlur?: () => void;
+  onBlur?: (event: FocusEvent<HTMLTextAreaElement>) => void;
 }
 
 export const FormTextarea = forwardRef<HTMLTextAreaElement, FormTextareaProps>(
@@ -27,7 +27,7 @@ export const FormTextarea = forwardRef<HTMLTextAreaElement, FormTextareaProps>(
       placeholder,
       required,
       disabled,
-      errors,
+      error,
       className,
       defaultValue = "",
       onBlur,
@@ -61,7 +61,7 @@ export const FormTextarea = forwardRef<HTMLTextAreaElement, FormTextareaProps>(
             aria-describedby={`${id}-error`}
           />
         </div>
-        <FormErrors id={id} errors={errors} />
+        <FormError id={id} error={error} />
       </div>
     );
   }

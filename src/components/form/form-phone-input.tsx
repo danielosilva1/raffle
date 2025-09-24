@@ -1,11 +1,11 @@
 "use client";
 
-import { forwardRef, useEffect, useState } from "react";
+import { FocusEvent, forwardRef, useEffect, useState } from "react";
 import { useFormStatus } from "react-dom";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
-import { FormErrors } from "./form-errors";
+import { FormError } from "./form-error";
 
 interface FormPhoneInputProps {
   id: string;
@@ -13,11 +13,20 @@ interface FormPhoneInputProps {
   placeholder?: string;
   required?: boolean;
   disabled?: boolean;
-  errors?: Record<string, string[] | undefined>;
+  error?: string;
   className?: string;
   value?: string;
-  onBlur?: () => void;
+  onBlur?: (event: FocusEvent<HTMLInputElement>) => void;
+  onChange?: (value: string) => void;
 }
+
+const formatPhone = (phone: string) => {
+  const numbers = phone.replace(/\D/g, "");
+  return numbers
+    .replace(/^(\d{2})(\d)/, "($1) $2")
+    .replace(/(\d{5})(\d)/, "$1-$2")
+    .slice(0, 15);
+};
 
 export const FormPhoneInput = forwardRef<HTMLInputElement, FormPhoneInputProps>(
   (
@@ -27,33 +36,27 @@ export const FormPhoneInput = forwardRef<HTMLInputElement, FormPhoneInputProps>(
       placeholder,
       required,
       disabled,
-      errors,
+      error,
       className,
-      value = "",
+      value,
       onBlur,
+      onChange,
     },
     ref
   ) => {
     const { pending } = useFormStatus();
-    const [formattedPhone, setFormatedPhone] = useState("");
-
-    const formatPhone = (phone: string) => {
-      const numbers = phone.replace(/\D/g, "");
-      const formatted = numbers
-        .replace(/^(\d{2})(\d)/, "($1) $2")
-        .replace(/(\d{5})(\d)/, "$1-$2")
-        .slice(0, 15);
-
-      setFormatedPhone(formatted);
-    };
+    const [formattedPhone, setFormattedPhone] = useState("");
 
     const onChangeValue = (e: React.ChangeEvent<HTMLInputElement>) => {
       const { value } = e.target;
-      formatPhone(value);
+      const formatted = formatPhone(value);
+      setFormattedPhone(formatted);
+      onChange?.(formatted ?? "");
     };
 
     useEffect(() => {
-      formatPhone(value);
+      const formatted = formatPhone(value ?? "");
+      setFormattedPhone(formatted);
     }, [value]);
 
     return (
@@ -84,7 +87,7 @@ export const FormPhoneInput = forwardRef<HTMLInputElement, FormPhoneInputProps>(
             onChange={onChangeValue}
           />
         </div>
-        <FormErrors id={id} errors={errors} />
+        <FormError id={id} error={error} />
       </div>
     );
   }

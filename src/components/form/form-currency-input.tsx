@@ -1,11 +1,11 @@
 "use client";
 
-import { forwardRef, useEffect, useState } from "react";
+import { FocusEvent, forwardRef, useEffect, useState } from "react";
 import { useFormStatus } from "react-dom";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
-import { FormErrors } from "./form-errors";
+import { FormError } from "./form-error";
 
 interface FormCurrencyInputProps {
   id: string;
@@ -13,11 +13,21 @@ interface FormCurrencyInputProps {
   placeholder?: string;
   required?: boolean;
   disabled?: boolean;
-  errors?: Record<string, string[] | undefined>;
+  error?: string;
   className?: string;
   value?: string;
-  onBlur?: () => void;
+  onBlur?: (event: FocusEvent<HTMLInputElement>) => void;
+  onChange?: (value: string) => void;
 }
+
+const formatCurrency = (value: string) => {
+  const numbers = value.replace(/\D/g, "");
+  const numericValue = Number(numbers) / 100;
+  return numericValue.toLocaleString("pt-BR", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
+};
 
 export const FormCurrencyInput = forwardRef<
   HTMLInputElement,
@@ -30,34 +40,26 @@ export const FormCurrencyInput = forwardRef<
       placeholder,
       required,
       disabled,
-      errors,
+      error,
       className,
       value = "",
       onBlur,
+      onChange,
     },
     ref
   ) => {
     const { pending } = useFormStatus();
     const [formattedCurrency, setFormatedCurrency] = useState("");
 
-    const formatCurrency = (value: string) => {
-      const numbers = value.replace(/\D/g, "");
-      const numericValue = Number(numbers) / 100;
-      const formatted = numericValue.toLocaleString("pt-BR", {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2,
-      });
-
-      setFormatedCurrency(formatted);
-    };
-
     const onChangeValue = (e: React.ChangeEvent<HTMLInputElement>) => {
       const { value } = e.target;
-      formatCurrency(value);
+      const formatted = formatCurrency(value);
+      setFormatedCurrency(formatted);
+      onChange?.(formatted);
     };
 
     useEffect(() => {
-      formatCurrency(value);
+      setFormatedCurrency(formatCurrency(value));
     }, [value]);
 
     return (
@@ -88,7 +90,7 @@ export const FormCurrencyInput = forwardRef<
             onChange={onChangeValue}
           />
         </div>
-        <FormErrors id={id} errors={errors} />
+        <FormError id={id} error={error} />
       </div>
     );
   }

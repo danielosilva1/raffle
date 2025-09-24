@@ -1,11 +1,11 @@
 "use client";
 
-import { forwardRef } from "react";
+import { FocusEvent, forwardRef } from "react";
 import { useFormStatus } from "react-dom";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
-import { FormErrors } from "./form-errors";
+import { FormError } from "./form-error";
 
 interface FormInputProps {
   id: string;
@@ -14,10 +14,11 @@ interface FormInputProps {
   placeholder?: string;
   required?: boolean;
   disabled?: boolean;
-  errors?: Record<string, string[] | undefined>;
+  error?: string;
   className?: string;
+  value?: string;
   defaultValue?: string;
-  onBlur?: () => void;
+  onBlur?: (event: FocusEvent<HTMLInputElement>) => void;
 }
 
 export const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
@@ -29,8 +30,9 @@ export const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
       placeholder,
       required,
       disabled,
-      errors,
+      error,
       className,
+      value,
       defaultValue = "",
       onBlur,
     },
@@ -52,6 +54,8 @@ export const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
             </div>
           )}
           <Input
+            id={id}
+            value={value}
             onBlur={onBlur}
             defaultValue={defaultValue}
             ref={ref}
@@ -64,7 +68,7 @@ export const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
             aria-describedby={`${id}-error`}
           />
         </div>
-        <FormErrors id={id} errors={errors} />
+        <FormError id={id} error={error} />
       </div>
     );
   }

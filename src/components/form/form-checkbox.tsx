@@ -1,24 +1,27 @@
 "use client";
 
-import { forwardRef } from "react";
+import { FocusEvent, forwardRef } from "react";
 import { useFormStatus } from "react-dom";
 import { cn } from "@/lib/utils";
-import { FormErrors } from "./form-errors";
 import { Label } from "@/components/ui/label";
+import { FormError } from "./form-error";
 
 interface FormCheckboxProps {
   id: string;
   label?: string;
   required?: boolean;
   disabled?: boolean;
-  errors?: Record<string, string[] | undefined>;
+  error?: string;
   className?: string;
   checked?: boolean;
-  onBlur?: () => void;
+  onBlur?: (event: FocusEvent<HTMLInputElement>) => void;
 }
 
 export const FormCheckbox = forwardRef<HTMLInputElement, FormCheckboxProps>(
-  ({ id, label, required, disabled, errors, className, checked }, ref) => {
+  (
+    { id, label, required, disabled, error, className, checked, onBlur },
+    ref
+  ) => {
     const { pending } = useFormStatus();
 
     return (
@@ -34,10 +37,11 @@ export const FormCheckbox = forwardRef<HTMLInputElement, FormCheckboxProps>(
             disabled={disabled || pending}
             required={required}
             checked={checked}
+            onBlur={onBlur}
           />
           <Label htmlFor={id}>{label}</Label>
         </div>
-        <FormErrors id={id} errors={errors} />
+        <FormError id={id} error={error} />
       </div>
     );
   }
