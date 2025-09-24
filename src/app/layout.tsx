@@ -7,6 +7,8 @@ import { Footer } from "@/components/footer";
 import { cn } from "@/lib/utils";
 import { Toaster } from "sonner";
 
+import { ClerkProvider } from "@clerk/nextjs";
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -38,20 +40,22 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pt-BR">
-      <body
-        className={cn(
-          `${geistSans.variable} ${geistMono.variable} antialiased`,
-          "grid grid-rows-[min-content_1fr_min-content] h-full"
-        )}
-      >
-        <Navbar />
-        <main className="h-full flex justify-center bg-blue-50 ">
-          {children}
-        </main>
-        <Footer />
-        <Toaster />
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang="pt-BR">
+        <body
+          className={cn(
+            `${geistSans.variable} ${geistMono.variable} antialiased`,
+            "grid grid-rows-[min-content_1fr_min-content] h-full"
+          )}
+        >
+          <Navbar />
+          <main className="h-full flex justify-center bg-blue-50 ">
+            {children}
+          </main>
+          <Footer />
+          <Toaster />
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
