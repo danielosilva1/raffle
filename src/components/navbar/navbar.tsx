@@ -1,5 +1,7 @@
-import { Plus, Search } from "lucide-react";
+import { Home, LogIn, Plus, Search } from "lucide-react";
 import { NavbarButton } from "./navbar-button";
+import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
+import { Button } from "@/components/ui/button";
 
 export const Navbar = () => {
   return (
@@ -10,7 +12,12 @@ export const Navbar = () => {
             md:max-w-screen-2xl md:flex-row md:justify-between md:items-center md:space-y-0
           "
       >
-        <p>Home</p>
+        <NavbarButton
+          label="Início"
+          href="/"
+          icon={Home}
+          className="bg-blue-800 text-white hover:bg-blue-800/90           "
+        />
 
         <div
           className="
@@ -20,7 +27,7 @@ export const Navbar = () => {
         >
           <NavbarButton
             label="Minhas rifas"
-            href="/"
+            href="/my-raffles"
             icon={Search}
             className="
               border bg-background shadow-xs
@@ -35,6 +42,24 @@ export const Navbar = () => {
             icon={Plus}
             className="bg-green-800 text-white hover:bg-green-800/90           "
           />
+
+          <SignedOut>
+            <SignInButton>
+              <Button
+                variant="default"
+                size="sm"
+                className="flex justify-start cursor-pointer bg-yellow-700 font-semibold hover:bg-yellow-700/70"
+              >
+                <LogIn className="w-4 h-4" />
+                <span>Entrar</span>
+              </Button>
+            </SignInButton>
+          </SignedOut>
+          <SignedIn>
+            <div className="flex justify-end w-full md:w-fit">
+              <UserButton />
+            </div>
+          </SignedIn>
         </div>
       </div>
     </nav>
