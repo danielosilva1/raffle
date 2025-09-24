@@ -1,43 +1,79 @@
 "use server";
 
-import { z } from "zod";
-import { CreateRaffle, FormState } from "./types";
+import { flattenError } from "zod";
+import { Schema, schema } from "./types";
 import db from "@/lib/db";
 
-export async function createRaffle(prevState: FormState, formData: FormData) {
-  const rawData = Object.fromEntries(formData.entries());
-  const parsed = CreateRaffle.safeParse(rawData);
+export async function createRaffle(data: Schema) {
+  const parsed = schema.safeParse({
+    ...data,
+  });
 
-  if (parsed.success) {
-    try {
+  try {
+    if (parsed.success) {
       const raffle = await db.raffle.create({
         data: {
           ...parsed.data,
-          status: "opened",
+          status: "open",
         },
       });
 
       return {
         success: true,
-        message: "Rifa adicionada com sucesso",
+        message: "Rifa criada com sucesso",
         data: raffle,
-        fieldErrors: {},
       };
-    } catch (error) {
-      console.error(error);
+    } else {
+      console.error(
+        "Zod validation failed:\n",
+        flattenError(parsed.error).fieldErrors
+      );
       return {
         success: false,
-        message: "Erro ao adicionar rifa",
+        message: "Erro ao criar rifa",
         data: null,
-        fieldErrors: {},
       };
     }
-  } else {
+  } catch (error) {
+    console.error(error);
     return {
       success: false,
-      message: "Erro ao adicionar rifa",
+      message: "rro ao criar rifa",
       data: null,
-      fieldErrors: z.flattenError(parsed.error).fieldErrors,
     };
   }
+
+  // if (parsed.success) {
+  //   try {
+  //   const raffle = await db.raffle.create({
+  //     data: {
+  //       ...parsed.data,
+  //       status: "opened",
+  //     },
+  //   });
+
+  //   return {
+  //     success: true,
+  //     message: "Rifa criada com sucesso",
+  //     data: raffle,
+  //   };
+  // } catch (error) {
+  // console.error(error);
+  // return {
+  //   success: false,
+  //   message: "rro ao criar rifa",
+  //   data: null,
+  // };
+  // }
+  // } else {
+  // console.error(
+  //   "Zod validation failed:\n",
+  //   flattenError(parsed.error).fieldErrors
+  // );
+  // return {
+  //   success: false,
+  //   message: "Erro ao criar rifa",
+  //   data: null,
+  // };
+  // }
 }
