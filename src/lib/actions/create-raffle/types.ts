@@ -55,18 +55,37 @@ export const schema = z.object({
     }
     return val;
   }, z.coerce.number({ error: "Informe um valor numérico" }).min(0.5, { error: "Preço deve ser pelo menos 50 centavos" })),
-  drawDate: preprocess((val) => {
-    if (typeof val === "string") {
-      const cleaned = val.trim();
-      const date = new Date(cleaned);
+  drawDate: preprocess(
+    (val) => {
+      if (typeof val === "string") {
+        const cleaned = val.trim();
+        const date = new Date(cleaned);
 
-      if (cleaned === "") {
-        return null;
+        if (cleaned === "") {
+          return null;
+        }
+        return date;
       }
-      return date;
-    }
-    return val ?? null;
-  }, z.coerce.date({ error: "Data inválida" }).nullable()),
+      return val ?? null;
+    },
+    z.coerce
+      .date({ error: "Data inválida" })
+      .refine(
+        (val) => {
+          const today = new Date(Date.now());
+          today.setHours(0);
+          today.setMinutes(0);
+          today.setSeconds(0);
+          today.setMilliseconds(0);
+
+          return val >= today;
+        },
+        {
+          error: "Data deve ser hoje ou posterior",
+        }
+      )
+      .nullable()
+  ),
   additionalInfo: preprocess((val) => {
     if (typeof val === "string") {
       const cleaned = val.trim();
