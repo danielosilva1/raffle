@@ -50,7 +50,6 @@ export const schema = z.object({
   }, z.coerce.number({ error: "Informe um valor numérico" }).int().min(5, { error: "Adicione entre 5 e mil números" }).max(1000, { error: "Adicione entre 5 e mil números" })),
   numberPrice: z.preprocess((val) => {
     if (typeof val === "string") {
-      console.log("O tipo de val em numberPrice é string");
       return val.trim().replace(",", ".");
     }
     return val;

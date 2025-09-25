@@ -1,6 +1,6 @@
 "use client";
 
-import { FocusEvent, forwardRef } from "react";
+import { ChangeEvent, FocusEvent, forwardRef } from "react";
 import { useFormStatus } from "react-dom";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
@@ -14,11 +14,13 @@ interface FormInputProps {
   placeholder?: string;
   required?: boolean;
   disabled?: boolean;
+  readOnly?: boolean;
   error?: string;
   className?: string;
   value?: string;
   defaultValue?: string;
   onBlur?: (event: FocusEvent<HTMLInputElement>) => void;
+  onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
 }
 
 export const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
@@ -30,11 +32,13 @@ export const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
       placeholder,
       required,
       disabled,
+      readOnly,
       error,
       className,
       value,
-      defaultValue = "",
+      defaultValue,
       onBlur,
+      onChange,
     },
     ref
   ) => {
@@ -57,9 +61,11 @@ export const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
             id={id}
             value={value}
             onBlur={onBlur}
+            onChange={onChange}
             defaultValue={defaultValue}
             ref={ref}
             required={required}
+            readOnly={readOnly}
             name={id}
             placeholder={placeholder}
             type={type}

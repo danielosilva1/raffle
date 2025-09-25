@@ -14,6 +14,7 @@ import Link from "next/link";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
+import { useUser } from "@clerk/nextjs";
 
 export const AddRaffleForm = () => {
   const {
@@ -25,6 +26,7 @@ export const AddRaffleForm = () => {
   } = useForm({
     resolver: zodResolver(schema),
   });
+  const { user } = useUser();
 
   const onSubmit = async (data: Schema) => {
     const { success, message } = await createRaffle(data);
@@ -76,6 +78,8 @@ export const AddRaffleForm = () => {
       >
         <FormInput
           id="organizerName"
+          value={user?.fullName ?? ""}
+          readOnly
           label="Organizador(a)*"
           className="h-8 border border-blue-200 w-full"
           placeholder="Nome do(a) organizador(a)"
@@ -132,13 +136,25 @@ export const AddRaffleForm = () => {
             md:flex md:justify-between md:space-x-10
           "
       >
-        <FormInput
-          id="numberQuantity"
-          label="Quantidade de números*"
-          className="h-8 border border-blue-200 w-full"
-          placeholder="Quantidade de números"
-          error={errors.numberQuantity?.message}
-          {...register("numberQuantity")}
+        <Controller
+          name="numberQuantity"
+          control={control}
+          defaultValue=""
+          render={({ field, fieldState }) => (
+            <FormInput
+              id="numberQuantity"
+              label="Quantidade de números*"
+              className="h-8 border border-blue-200 w-full"
+              placeholder="Quantidade de números"
+              value={field.value as string}
+              onChange={(e) => {
+                const value = e.target.value;
+                const numbers = value.replace(/\D/g, "");
+                field.onChange(numbers);
+              }}
+              error={fieldState.error?.message}
+            />
+          )}
         />
 
         <Controller
