@@ -6,7 +6,7 @@ import db from "@/lib/db";
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 
-export async function createRaffle(data: Schema) {
+export async function createCampaign(data: Schema) {
   const { userId } = await auth();
   const parsed = schema.safeParse({
     ...data,
@@ -18,18 +18,19 @@ export async function createRaffle(data: Schema) {
 
   try {
     if (parsed.success) {
-      const raffle = await db.raffle.create({
+      const campaign = await db.campaign.create({
         data: {
           ...parsed.data,
-          status: "open",
-          organizerId: userId,
+          status: "active",
+          createdBy: userId,
+          organizerUserId: userId,
         },
       });
 
       return {
         success: true,
-        message: "Rifa criada com sucesso",
-        data: raffle,
+        message: "Campanha criada com sucesso",
+        data: campaign,
       };
     } else {
       console.error(
@@ -38,7 +39,7 @@ export async function createRaffle(data: Schema) {
       );
       return {
         success: false,
-        message: "Erro ao criar rifa",
+        message: "Erro ao criar campanha",
         data: null,
       };
     }
@@ -46,7 +47,7 @@ export async function createRaffle(data: Schema) {
     console.error(error);
     return {
       success: false,
-      message: "Erro ao criar rifa",
+      message: "Erro ao criar campanha",
       data: null,
     };
   }

@@ -6,8 +6,8 @@ export const Footer = () => {
       <div className="flex flex-col items-center">
         <HandHeart className="h-5 w-5 text-blue-500" />
         <span className="hidden text-blue-500 text-xs tracking-wide md:block xl:text-sm">
-          O bem que fizeres em algum lugar será teu advogado em toda parte
-          (Chico Chavier)
+          Este é um projeto <span className="font-bold">educativo</span> e{" "}
+          <span className="font-bold">sem fins lucrativos</span>
         </span>
       </div>
     </div>

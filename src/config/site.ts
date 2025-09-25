@@ -1,4 +1,5 @@
 export const siteConfig = {
-  name: "Raffle",
-  description: "Uma plataforma para criar, divulgar e gerenciar rifas com propósito social", 
-}
+  name: "Capanha",
+  description:
+    "Uma plataforma para criar, divulgar e gerenciar campanhas com propósito social",
+};

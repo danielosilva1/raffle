@@ -26,8 +26,8 @@ export const Navbar = () => {
           "
         >
           <NavbarButton
-            label="Minhas rifas"
-            href="/my-raffles"
+            label="Minhas campanhas"
+            href="/my-campaigns"
             icon={Search}
             className="
               border bg-background shadow-xs
@@ -37,8 +37,8 @@ export const Navbar = () => {
           />
 
           <NavbarButton
-            label="Criar rifa"
-            href="/add-raffle"
+            label="Criar campanha"
+            href="/add-campaign"
             icon={Plus}
             className="bg-green-800 text-white hover:bg-green-800/90           "
           />

@@ -14,36 +14,33 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Raffle {
-  id                   String         @id @default(uuid()) @map("raffle_pk")
-  title                String
-  description          String
-  award                String
-  organizerId          String         @map("organizer_pk")
-  organizerName        String         @map("organizer_name")
-  organizerPhoneNumber String         @map("organizer_phone_number")
-  pixKey               String         @map("pix_key")
-  pixHolderName        String         @map("pix_holder_name")
-  numberQuantity       Int            @map("number_quantity")
-  numberPrice          Float          @map("number_price")
-  drawDate             DateTime?      @map("draw_date")
-  status               String
-  drawnNumber          Int?           @map("drawn_number")
-  additionalInfo       String?        @map("additional_info")
-  allowCashPayment     Boolean        @default(true)
-  raffleNumbers        RaffleNumber[]
+model Campaign {
+  id                String            @id @default(uuid()) @map("campaign_pk")
+  title             String
+  status            String // active, closed, cancelled 
+  description       String
+  targetSupporters  Int               @map("target_supporters")
+  organizerUserId   String            @map("organizer_user_pk")
+  organizerName     String            @map("organizer_name")
+  startDate         DateTime          @map("start_date")
+  endDate           DateTime?         @map("end_date")
+  drawnNumber       Int?              @map("drawn_number")
+  createdBy         String            @map("created_by")
+  createdAt         DateTime          @default(now())
+  campaign_supports CampaignSupport[]
 
-  @@map("raffle")
+  @@map("campaign")
 }
 
-model RaffleNumber {
-  id               String  @id @default(uuid()) @map("raffle_number_pk")
-  number           Int
-  status           String
-  buyerName        String? @map("buyer_name")
-  buyerPhoneNumber String? @map("buyer_phone_number")
-  raffleId         String  @map("raffle_pk")
-  raffle           Raffle  @relation(fields: [raffleId], references: [id])
+model CampaignSupport {
+  id              String   @id @default(uuid()) @map("campaign_support_pk")
+  order           Int
+  supporterUserId String   @map("supporter_user_pk")
+  supporterName   String   @map("supporter_name")
+  message         String?
+  supportedAt     DateTime @default(now()) @map("supported_at")
+  campaignId      String   @map("campaign_pk")
+  campaign        Campaign @relation(fields: [campaignId], references: [id])
 
-  @@map("raffle_number")
+  @@map("campaign_support")
 }
