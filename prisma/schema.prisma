@@ -19,6 +19,7 @@ model Raffle {
   title                String
   description          String
   award                String
+  organizerId          String         @map("organizer_pk")
   organizerName        String         @map("organizer_name")
   organizerPhoneNumber String         @map("organizer_phone_number")
   pixKey               String         @map("pix_key")

@@ -3,11 +3,18 @@
 import { flattenError } from "zod";
 import { Schema, schema } from "./types";
 import db from "@/lib/db";
+import { auth } from "@clerk/nextjs/server";
+import { redirect } from "next/navigation";
 
 export async function createRaffle(data: Schema) {
+  const { userId } = await auth();
   const parsed = schema.safeParse({
     ...data,
   });
+
+  if (!userId) {
+    redirect("/sign-in");
+  }
 
   try {
     if (parsed.success) {
@@ -15,6 +22,7 @@ export async function createRaffle(data: Schema) {
         data: {
           ...parsed.data,
           status: "open",
+          organizerId: userId,
         },
       });
 
@@ -38,42 +46,8 @@ export async function createRaffle(data: Schema) {
     console.error(error);
     return {
       success: false,
-      message: "rro ao criar rifa",
+      message: "Erro ao criar rifa",
       data: null,
     };
   }
-
-  // if (parsed.success) {
-  //   try {
-  //   const raffle = await db.raffle.create({
-  //     data: {
-  //       ...parsed.data,
-  //       status: "opened",
-  //     },
-  //   });
-
-  //   return {
-  //     success: true,
-  //     message: "Rifa criada com sucesso",
-  //     data: raffle,
-  //   };
-  // } catch (error) {
-  // console.error(error);
-  // return {
-  //   success: false,
-  //   message: "rro ao criar rifa",
-  //   data: null,
-  // };
-  // }
-  // } else {
-  // console.error(
-  //   "Zod validation failed:\n",
-  //   flattenError(parsed.error).fieldErrors
-  // );
-  // return {
-  //   success: false,
-  //   message: "Erro ao criar rifa",
-  //   data: null,
-  // };
-  // }
 }
