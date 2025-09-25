@@ -1,9 +1,12 @@
 "use client";
 
+import { ClipboardCopy } from "@/components/clipboard-copy";
+import { CustomTooltip } from "@/components/custom-tooltip";
 import { Button } from "@/components/ui/button";
 import { Schema } from "@/lib/actions/create-campaign/types";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown, Copy, Pencil } from "lucide-react";
+import Link from "next/link";
 
 const status: Record<string, string> = {
   active: "Ativa",
@@ -11,7 +14,11 @@ const status: Record<string, string> = {
   cancelled: "Cancelada",
 };
 
-export const columns: ColumnDef<Schema>[] = [
+type Campaign = Schema & {
+  id: string;
+};
+
+export const columns: ColumnDef<Campaign>[] = [
   {
     accessorKey: "title",
     header: ({ column }) => {
@@ -65,12 +72,26 @@ export const columns: ColumnDef<Schema>[] = [
 
       return (
         <div className="flex space-x-4">
-          <Button size="icon" variant="outline">
-            <Copy />
-          </Button>
-          <Button size="icon" variant="outline">
-            <Pencil />
-          </Button>
+          <CustomTooltip content="Editar os dados da campanha">
+            <Link
+              href={`/campaign/${campaign.id}`}
+              className="flex justify-center items-center size-9 rounded-sm border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50"
+            >
+              <Pencil className="w-4 h-4" />
+            </Link>
+          </CustomTooltip>
+
+          <ClipboardCopy value={`${process.env.NEXT_PUBLIC_BASE_URL}/campaign/${campaign.id}`}>
+            <CustomTooltip content="Copiar link de compartilhamento">
+              <Button
+                size="icon"
+                variant="default"
+                className="bg-blue-800 hover:bg-blue-800/70"
+              >
+                <Copy className="w-4 h-4" />
+              </Button>
+            </CustomTooltip>
+          </ClipboardCopy>
         </div>
       );
     },
