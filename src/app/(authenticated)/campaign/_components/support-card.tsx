@@ -1,6 +1,6 @@
 import { CustomTooltip } from "@/components/custom-tooltip";
 import { Button } from "@/components/ui/button";
-import { Schema } from "@/lib/actions/create-campaign-support/types";
+import { Schema } from "@/lib/actions/add-campaign-support/types";
 import { HeartOff } from "lucide-react";
 
 export type Support = Schema & {
