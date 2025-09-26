@@ -14,17 +14,21 @@ interface SupportCardProps {
 
 export const SupportCard = ({ support, allowDelete }: SupportCardProps) => {
   return (
-    <div className="group/card w-full h-full p-2 text-blue-900 border border-blue-300 bg-blue-300/30 rounded-sm">
+    <div className="flex flex-col justify-between w-full h-full p-2 text-blue-900 border border-blue-300 bg-blue-300/30 rounded-sm">
       <p className="text-lg">{support.supporterName}</p>
 
-      <blockquote className="mt-4 italic text-sm text-blue-900">
+      <blockquote className="flex h-full mt-4 italic text-sm text-blue-900">
         {support.message ?? "Apoiador(a) não deixou mensagem"}
       </blockquote>
 
       {allowDelete && (
-        <div className="hidden justify-end group-hover/card:flex">
+        <div className="flex justify-end">
           <CustomTooltip content="Remover apoio">
-            <Button size="icon" variant="outline">
+            <Button
+              size="icon"
+              variant="ghost"
+              className="w-7 h-7 bg-red-300 hover:bg-red-300/70"
+            >
               <HeartOff />
             </Button>
           </CustomTooltip>
