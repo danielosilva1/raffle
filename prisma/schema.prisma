@@ -24,7 +24,6 @@ model Campaign {
   organizerName     String            @map("organizer_name")
   startDate         DateTime          @map("start_date")
   endDate           DateTime?         @map("end_date")
-  drawnNumber       Int?              @map("drawn_number")
   createdBy         String            @map("created_by")
   createdAt         DateTime          @default(now())
   campaign_supports CampaignSupport[]
@@ -34,7 +33,6 @@ model Campaign {
 
 model CampaignSupport {
   id              String   @id @default(uuid()) @map("campaign_support_pk")
-  order           Int
   supporterUserId String   @map("supporter_user_pk")
   supporterName   String   @map("supporter_name")
   message         String?

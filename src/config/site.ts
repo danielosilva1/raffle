@@ -1,5 +1,5 @@
 export const siteConfig = {
-  name: "Capanha",
+  name: "Campanha",
   description:
     "Uma plataforma para criar, divulgar e gerenciar campanhas com propósito social",
 };
