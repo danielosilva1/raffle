@@ -74,7 +74,7 @@ export function SupportPopover({ campaignId }: SupportPopoverProps) {
 
             <FormSubmit
               label="Apoiar"
-              className="bg-green-800 font-semibold hover:bg-green-800/70"
+              className="w-full bg-green-800 font-semibold hover:bg-green-800/70"
             />
           </form>
         </div>
