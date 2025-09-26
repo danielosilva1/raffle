@@ -5,7 +5,7 @@ interface SupportsProps {
   allowDelete?: boolean;
 }
 
-export const Supports = ({ supports, allowDelete = true }: SupportsProps) => {
+export const Supports = ({ supports, allowDelete = false }: SupportsProps) => {
   return supports.length > 0 ? (
     <div
       className="

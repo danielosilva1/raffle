@@ -1,5 +1,8 @@
 import NotFound from "@/app/not-found";
+import { Button } from "@/components/ui/button";
 import db from "@/lib/db";
+import { HandHeart, HeartHandshake } from "lucide-react";
+import { Supports } from "../_components/supports";
 
 const status: Record<string, string> = {
   active: "Ativa",
@@ -18,6 +21,11 @@ export default async function CampaignPage({
       id: campaignId,
     },
     include: {
+      campaign_supports: {
+        where: {
+          campaignId: campaignId,
+        },
+      },
       _count: {
         select: {
           campaign_supports: {
@@ -35,12 +43,12 @@ export default async function CampaignPage({
   }
 
   return (
-    <div className="w-full flex flex-col items-center pt-6 pb-6">
-      <h1 className="mb-6 text-2xl text-blue-900 text-center">
+    <div className="w-full flex flex-col items-center pt-6 pb-6 space-y-6">
+      <h1 className="mb-6 px-4 text-2xl text-blue-900 text-center">
         {campaign.title}
       </h1>
 
-      <div className="w-[80%] space-y-3 xl:max-w-2xl p-4 border border-blue-300 rounded-sm">
+      <div className="space-y-3 xl:max-w-2xl p-4 border border-blue-300 rounded-sm">
         <div className="space-x-2">
           <span className="text-neutral-900 font-semibold">Descrição:</span>
           <span className="text-neutral-900">{campaign.description}</span>
@@ -104,6 +112,14 @@ export default async function CampaignPage({
             </span>
           </div>
         </div>
+      </div>
+      
+      <div className="w-full px-4 space-y-4 xl:max-w-screen-2xl">
+        <div className="flex items-center justify-center space-x-2 font-semibold text-blue-800">
+          <HeartHandshake />
+          <span>Apoiadores</span>
+        </div>
+        <Supports supports={campaign.campaign_supports} />
       </div>
     </div>
   );
