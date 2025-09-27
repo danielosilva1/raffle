@@ -1,8 +1,10 @@
 import NotFound from "@/app/not-found";
-import { Button } from "@/components/ui/button";
 import db from "@/lib/db";
-import { HandHeart, HeartHandshake } from "lucide-react";
+import { HeartHandshake } from "lucide-react";
 import { Supports } from "../_components/supports";
+import { SupportButton } from "./_components/support-button";
+import { auth } from "@clerk/nextjs/server";
+import { redirect } from "next/navigation";
 
 const status: Record<string, string> = {
   active: "Ativa",
@@ -15,6 +17,7 @@ export default async function CampaignPage({
 }: {
   params: Promise<{ campaignId: string }>;
 }) {
+  const { userId } = await auth();
   const { campaignId } = await params;
   const campaign = await db.campaign.findUnique({
     where: {
@@ -42,6 +45,10 @@ export default async function CampaignPage({
     return NotFound();
   }
 
+  if (!userId) {
+    redirect("/sign-in");
+  }
+
   return (
     <div className="w-full flex flex-col items-center pt-6 pb-6 space-y-6">
       <h1 className="mb-6 px-4 text-2xl text-blue-900 text-center">
@@ -58,7 +65,7 @@ export default async function CampaignPage({
           <span className="text-neutral-900">{status[campaign.status]}</span>
         </div>
 
-        <div className="space-y-3 md:grid md:grid-cols-2">
+        <div className="space-y-3 md:grid md:grid-cols-2 md:gap-4">
           <div className="space-x-2">
             <span className="text-neutral-900 font-semibold">
               Número de apoiadores:
@@ -77,7 +84,7 @@ export default async function CampaignPage({
           </div>
         </div>
 
-        <div className="space-y-3 md:grid md:grid-cols-2">
+        <div className="space-y-3 md:grid md:grid-cols-2 md:gap-4">
           <div className="space-x-2">
             <span className="text-neutral-900 font-semibold">
               Data de início:
@@ -96,7 +103,7 @@ export default async function CampaignPage({
           </div>
         </div>
 
-        <div className="space-y-3 md:grid md:grid-cols-2">
+        <div className="space-y-3 md:grid md:grid-cols-2 md:gap-4">
           <div className="space-x-2">
             <span className="text-neutral-900 font-semibold">
               Organizador(a):
@@ -113,13 +120,24 @@ export default async function CampaignPage({
           </div>
         </div>
       </div>
-      
+
+      {campaign.status === "active" && (
+        <SupportButton
+          userId={userId}
+          campaignId={campaignId}
+          campaignSupports={campaign.campaign_supports}
+        />
+      )}
+
       <div className="w-full px-4 space-y-4 xl:max-w-screen-2xl">
         <div className="flex items-center justify-center space-x-2 font-semibold text-blue-800">
           <HeartHandshake />
           <span>Apoiadores</span>
         </div>
-        <Supports supports={campaign.campaign_supports} />
+        <Supports
+          supports={campaign.campaign_supports}
+          allowDelete={campaign.createdBy === userId}
+        />
       </div>
     </div>
   );

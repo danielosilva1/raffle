@@ -53,15 +53,12 @@ export const AddCampaignForm = () => {
             de pagamento ou troca
           </span>
           <span>
-            A ficha sorteada é <span className="font-semibold">simbólica</span>,
-            sem expectativa de prêmio ou recompensa
-          </span>
-          <span>
             Ao criar uma campanha você{" "}
             <span className="font-semibold">concorda</span> com os termos acima
           </span>
         </div>
       </div>
+
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="w-full p-4 space-y-4 border border-blue-300 rounded-sm"
