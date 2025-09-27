@@ -25,7 +25,7 @@ export async function addCampaignSupport(data: Schema) {
         },
       });
 
-      revalidatePath(`/campaign/${data.campaignId}`);
+      revalidatePath("/campaign");
       return {
         success: true,
         message: "Você agora é um apoiador da campanha",

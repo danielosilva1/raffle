@@ -27,11 +27,11 @@ export async function updateCampaign(data: Schema) {
         },
         where: {
           id: campaignId,
-          organizerUserId: userId,
+          createdBy: userId,
         },
       });
 
-      revalidatePath(`/campaign/edit/${campaignId}`);
+      revalidatePath("/campaign");
       return {
         success: true,
         message: "Campanha atualizada com sucesso",

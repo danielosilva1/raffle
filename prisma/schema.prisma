@@ -38,7 +38,7 @@ model CampaignSupport {
   message         String?
   supportedAt     DateTime @default(now()) @map("supported_at")
   campaignId      String   @map("campaign_pk")
-  campaign        Campaign @relation(fields: [campaignId], references: [id])
+  campaign        Campaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
 
   @@map("campaign_support")
 }

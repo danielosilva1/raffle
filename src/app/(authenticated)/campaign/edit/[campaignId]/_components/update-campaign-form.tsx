@@ -14,6 +14,10 @@ import { toast } from "sonner";
 import { Info } from "lucide-react";
 import { Campaign } from "@/generated/prisma";
 import { FormSelect } from "@/components/form/form-select";
+import { Button } from "@/components/ui/button";
+import { CustomAlertDialog } from "@/components/custom-alert-dialog";
+import { deleteCampaign } from "@/lib/actions/delete-campaign/delete-campaign";
+import { redirect } from "next/navigation";
 
 interface UpdateCampaignFormProps {
   campaign: Campaign;
@@ -28,11 +32,24 @@ export const UpdateCampaignForm = ({ campaign }: UpdateCampaignFormProps) => {
   } = useForm({
     resolver: zodResolver(schema),
   });
-  const onSubmit = async (data: Schema) => {
+  const onUpdate = async (data: Schema) => {
     const { success, message } = await updateCampaign(data);
 
     if (success) {
       toast.success(message);
+    } else {
+      toast.error(message);
+    }
+  };
+
+  const onDelete = async () => {
+    const { success, message } = await deleteCampaign({
+      campaignId: campaign.id,
+    });
+
+    if (success) {
+      toast.success(message);
+      redirect("/my-campaigns");
     } else {
       toast.error(message);
     }
@@ -61,7 +78,7 @@ export const UpdateCampaignForm = ({ campaign }: UpdateCampaignFormProps) => {
       </div>
 
       <form
-        onSubmit={handleSubmit(onSubmit)}
+        onSubmit={handleSubmit(onUpdate)}
         className="w-full p-4 space-y-4 border border-blue-300 rounded-sm"
       >
         <input
@@ -215,6 +232,22 @@ export const UpdateCampaignForm = ({ campaign }: UpdateCampaignFormProps) => {
           >
             <span>Voltar</span>
           </Link>
+
+          <CustomAlertDialog
+            title="Confirma exclusão da campanha?"
+            description="Essa ação não poderá ser desfeita."
+            onConfirm={onDelete}
+            confirmLabel="Continuar"
+            cancelLabel="Cancelar"
+          >
+            <Button
+              variant="default"
+              size="lg"
+              className="font-semibold bg-red-700 hover:bg-red-700/70"
+            >
+              Excluir
+            </Button>
+          </CustomAlertDialog>
 
           <FormSubmit
             label="Salvar"

@@ -19,7 +19,7 @@ export async function deleteCampaignSupport(data: Schema) {
       where: { id: campaignSupportId },
     });
 
-    revalidatePath(`/campaign/${campaignSupport.id}`);
+    revalidatePath("/campaign");
     return {
       success: true,
       message: "Apoio removido",
@@ -29,7 +29,7 @@ export async function deleteCampaignSupport(data: Schema) {
     console.error(error);
     return {
       success: false,
-      message: "Erro ao remover suporte",
+      message: "Erro ao remover apoio",
       data: null,
     };
   }

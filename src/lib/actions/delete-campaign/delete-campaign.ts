@@ -16,7 +16,7 @@ export async function deleteCampaign(data: Schema) {
 
   try {
     const campaign = await db.campaign.delete({
-      where: { id: campaignId },
+      where: { id: campaignId, createdBy: userId },
     });
 
     revalidatePath("/campaign");
