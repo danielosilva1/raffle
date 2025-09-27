@@ -11,12 +11,6 @@ export const metadata: Metadata = {
 };
 
 export default async function Campaigns() {
-  const { userId } = await auth();
-
-  if (!userId) {
-    redirect("/sign-in");
-  }
-
   const campaigns = await db.campaign.findMany({
     orderBy: {
       createdAt: "desc",
