@@ -6,11 +6,11 @@ import { redirect } from "next/navigation";
 import { columns } from "./columns";
 
 export const metadata: Metadata = {
-  title: "Minhas campanhas",
-  description: "Veja as campanhas criadas por você",
+  title: "Campanhas",
+  description: "Veja as campanhas cadastradas",
 };
 
-export default async function MyCampaigns() {
+export default async function Campaigns() {
   const { userId } = await auth();
 
   if (!userId) {
@@ -18,9 +18,6 @@ export default async function MyCampaigns() {
   }
 
   const campaigns = await db.campaign.findMany({
-    where: {
-      createdBy: userId,
-    },
     orderBy: {
       createdAt: "desc",
     },
@@ -28,7 +25,7 @@ export default async function MyCampaigns() {
 
   return (
     <div className="w-full flex flex-col items-center pt-6 pb-6">
-      <h1 className="mb-6 text-2xl text-blue-900">Minhas campanhas</h1>
+      <h1 className="mb-6 text-2xl text-blue-900">Campanhas cadastradas</h1>
 
       <div className="container mx-auto py-10">
         <DataTable

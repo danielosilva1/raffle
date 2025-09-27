@@ -5,6 +5,13 @@ import { Supports } from "../_components/supports";
 import { SupportButton } from "./_components/support-button";
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Apoie",
+  description:
+    "Veja os detalhes de uma campanha, adicione ou remova seu apoio a ela",
+};
 
 const status: Record<string, string> = {
   active: "Ativa",
@@ -27,6 +34,9 @@ export default async function CampaignPage({
       campaign_supports: {
         where: {
           campaignId: campaignId,
+        },
+        orderBy: {
+          supportedAt: "desc",
         },
       },
       _count: {
