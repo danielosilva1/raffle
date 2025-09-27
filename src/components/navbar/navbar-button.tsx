@@ -3,7 +3,7 @@ import { LucideIcon } from "lucide-react";
 import Link from "next/link";
 
 interface NavbarButtonProps {
-  label: string;
+  label?: string;
   href: string;
   icon: LucideIcon;
   className?: string;
@@ -25,7 +25,7 @@ export const NavbarButton = ({
       role="button"
     >
       <Icon className="h-4 w-4" />
-      <span className="text-sm">{label}</span>
+      {label && <span className="text-sm">{label}</span>}
     </Link>
   );
 };

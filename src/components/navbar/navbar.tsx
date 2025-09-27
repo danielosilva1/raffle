@@ -1,7 +1,15 @@
-import { Home, LogIn, Plus, Search } from "lucide-react";
+import {
+  HandHeart,
+  HeartHandshake,
+  Home,
+  LogIn,
+  Plus,
+  Search,
+} from "lucide-react";
 import { NavbarButton } from "./navbar-button";
 import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
 import { Button } from "@/components/ui/button";
+import { CustomTooltip } from "@/components/custom-tooltip";
 
 export const Navbar = () => {
   return (
@@ -13,7 +21,6 @@ export const Navbar = () => {
           "
       >
         <NavbarButton
-          label="Início"
           href="/"
           icon={Home}
           className="bg-blue-800 text-white hover:bg-blue-800/90           "
@@ -25,23 +32,45 @@ export const Navbar = () => {
             md:flex-row md:space-x-6 md:items-center md:space-y-0
           "
         >
-          <NavbarButton
-            label="Minhas campanhas"
-            href="/my-campaigns"
-            icon={Search}
-            className="
+          <CustomTooltip content="Veja as campanhas que você apoia">
+            <NavbarButton
+              label="Meus apoios"
+              href="/my-supports"
+              icon={HandHeart}
+              className="bg-yellow-500 text-white hover:bg-yellow-500/90"
+            />
+          </CustomTooltip>
+
+          <CustomTooltip content="Veja todas as campanhas cadastradas">
+            <NavbarButton
+              label="Campanhas"
+              href="/my-supports"
+              icon={HeartHandshake}
+              className="bg-cyan-600 text-white hover:bg-cyan-600/90"
+            />
+          </CustomTooltip>
+
+          <CustomTooltip content="Veja as campanhas criadas por você">
+            <NavbarButton
+              label="Minhas campanhas"
+              href="/my-campaigns"
+              icon={Search}
+              className="
               border bg-background shadow-xs
               hover:bg-accent hover:text-accent-foreground
               dark:bg-input/30 dark:border-input dark:hover:bg-input/50
             "
-          />
+            />
+          </CustomTooltip>
 
-          <NavbarButton
-            label="Criar campanha"
-            href="/add-campaign"
-            icon={Plus}
-            className="bg-green-800 text-white hover:bg-green-800/90           "
-          />
+          <CustomTooltip content="Adicione uma campanha">
+            <NavbarButton
+              label="Criar campanha"
+              href="/add-campaign"
+              icon={Plus}
+              className="bg-green-800 text-white hover:bg-green-800/90"
+            />
+          </CustomTooltip>
 
           <SignedOut>
             <SignInButton>
