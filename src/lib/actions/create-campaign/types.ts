@@ -18,7 +18,7 @@ export const schema = z.object({
       return val.trim();
     }
     return val;
-  }, z.coerce.number({ error: "Informe um valor numérico" }).int().min(5, { error: "Adicione entre 5 e mil apoiadores" }).max(1000, { error: "Adicione entre 5 e mil apoiadores" })),
+  }, z.coerce.number({ error: "Informe um valor numérico" }).int().min(1, { error: "Valor deve ser pelo menos um" })),
   organizerName: preprocess((val) => {
     if (typeof val === "string") {
       return val.trim();
