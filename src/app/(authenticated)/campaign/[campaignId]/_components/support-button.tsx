@@ -1,16 +1,16 @@
 "use client";
 
-import { Support } from "../../_components/support-card";
 import { HeartOff } from "lucide-react";
 import { FormSubmit } from "@/components/form/form-submit";
 import { toast } from "sonner";
 import { deleteCampaignSupport } from "@/lib/actions/delete-campaign-support/delete-campaign-support";
 import { SupportPopover } from "./support-popover";
+import { CampaignSupport } from "@/generated/prisma";
 
 interface SupportButtonProps {
   userId: string;
   campaignId: string;
-  campaignSupports: Support[];
+  campaignSupports: CampaignSupport[];
 }
 
 export const SupportButton = ({

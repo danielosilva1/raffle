@@ -2,17 +2,13 @@
 
 import { CustomTooltip } from "@/components/custom-tooltip";
 import { Button } from "@/components/ui/button";
-import { Schema } from "@/lib/actions/add-campaign-support/types";
+import { CampaignSupport } from "@/generated/prisma";
 import { deleteCampaignSupport } from "@/lib/actions/delete-campaign-support/delete-campaign-support";
 import { HeartOff } from "lucide-react";
 import { toast } from "sonner";
 
-export type Support = Schema & {
-  id: string;
-};
-
 interface SupportCardProps {
-  support: Support;
+  support: CampaignSupport;
   allowDelete: boolean;
 }
 

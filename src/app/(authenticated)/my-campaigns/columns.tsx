@@ -74,14 +74,16 @@ export const columns: ColumnDef<Campaign>[] = [
         <div className="flex space-x-4">
           <CustomTooltip content="Editar os dados da campanha">
             <Link
-              href={`/campaign/${campaign.id}`}
+              href={`/campaign/edit/${campaign.id}`}
               className="flex justify-center items-center size-9 rounded-sm border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50"
             >
               <Pencil className="w-4 h-4" />
             </Link>
           </CustomTooltip>
 
-          <ClipboardCopy value={`${process.env.NEXT_PUBLIC_BASE_URL}/campaign/${campaign.id}`}>
+          <ClipboardCopy
+            value={`${process.env.NEXT_PUBLIC_BASE_URL}/campaign/${campaign.id}`}
+          >
             <CustomTooltip content="Copiar link de compartilhamento">
               <Button
                 size="icon"

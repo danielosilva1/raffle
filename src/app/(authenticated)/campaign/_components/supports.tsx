@@ -1,7 +1,8 @@
-import { Support, SupportCard } from "./support-card";
+import { CampaignSupport } from "@/generated/prisma";
+import { SupportCard } from "./support-card";
 
 interface SupportsProps {
-  supports: Support[];
+  supports: CampaignSupport[];
   allowDelete?: boolean;
 }
 

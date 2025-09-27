@@ -68,7 +68,9 @@ export default async function CampaignPage({
       <div className="space-y-3 xl:max-w-2xl p-4 border border-blue-300 rounded-sm">
         <div className="space-x-2">
           <span className="text-neutral-900 font-semibold">Descrição:</span>
-          <span className="text-neutral-900">{campaign.description}</span>
+          <span className="text-neutral-900 whitespace-pre-wrap">
+            {campaign.description}
+          </span>
         </div>
         <div className="space-x-2">
           <span className="text-neutral-900 font-semibold">Status:</span>
