@@ -28,6 +28,7 @@ interface FormSelectProps {
   error?: string;
   className?: string;
   value?: string;
+  onChange: (value: string) => void;
 }
 
 export const FormSelect = forwardRef<HTMLButtonElement, FormSelectProps>(
@@ -41,7 +42,8 @@ export const FormSelect = forwardRef<HTMLButtonElement, FormSelectProps>(
       disabled,
       error,
       className,
-      value = "",
+      value,
+      onChange,
     },
     ref
   ) => {
@@ -64,6 +66,7 @@ export const FormSelect = forwardRef<HTMLButtonElement, FormSelectProps>(
             value={value}
             required={required}
             disabled={disabled || pending}
+            onValueChange={onChange}
           >
             <SelectTrigger ref={ref} className={cn(className, "w-[180px]")}>
               <SelectValue

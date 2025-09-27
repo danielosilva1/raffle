@@ -1,6 +1,6 @@
 "use client";
 
-import { FocusEvent, forwardRef } from "react";
+import { ChangeEvent, FocusEvent, forwardRef } from "react";
 import { useFormStatus } from "react-dom";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
@@ -16,7 +16,9 @@ interface FormTextareaProps {
   error?: string;
   className?: string;
   defaultValue?: string;
+  value?: string;
   onBlur?: (event: FocusEvent<HTMLTextAreaElement>) => void;
+  onChange?: (event: ChangeEvent<HTMLTextAreaElement>) => void;
 }
 
 export const FormTextarea = forwardRef<HTMLTextAreaElement, FormTextareaProps>(
@@ -29,8 +31,10 @@ export const FormTextarea = forwardRef<HTMLTextAreaElement, FormTextareaProps>(
       disabled,
       error,
       className,
-      defaultValue = "",
+      defaultValue,
+      value,
       onBlur,
+      onChange,
     },
     ref
   ) => {
@@ -51,10 +55,12 @@ export const FormTextarea = forwardRef<HTMLTextAreaElement, FormTextareaProps>(
           )}
           <Textarea
             onBlur={onBlur}
+            onChange={onChange}
             defaultValue={defaultValue}
             ref={ref}
             required={required}
             name={id}
+            value={value}
             placeholder={placeholder}
             disabled={pending || disabled}
             className={cn("text-sm px-2 py-1 h-7", className)}
