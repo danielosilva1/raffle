@@ -1,5 +1,6 @@
 "use client";
 
+import { CustomAlertDialog } from "@/components/custom-alert-dialog";
 import { CustomTooltip } from "@/components/custom-tooltip";
 import { Button } from "@/components/ui/button";
 import { CampaignSupport } from "@/generated/prisma";
@@ -36,16 +37,20 @@ export const SupportCard = ({ support, allowDelete }: SupportCardProps) => {
       {allowDelete && (
         <div className="flex justify-end">
           <CustomTooltip content="Remover apoio">
-            <form action={onDeleteSupport}>
+            <CustomAlertDialog
+              title="Confirma a remoção do apoio?"
+              onConfirm={onDeleteSupport}
+              confirmLabel="Continuar"
+              cancelLabel="Cancelar"
+            >
               <Button
                 size="icon"
                 variant="ghost"
                 className="w-7 h-7 bg-red-300 hover:bg-red-300/70"
-                type="submit"
               >
                 <HeartOff />
               </Button>
-            </form>
+            </CustomAlertDialog>
           </CustomTooltip>
         </div>
       )}

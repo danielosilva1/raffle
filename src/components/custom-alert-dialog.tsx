@@ -1,3 +1,5 @@
+"use client";
+
 import {
   AlertDialog,
   AlertDialogAction,
@@ -15,6 +17,9 @@ import React from "react";
 interface CustomAlertDialogProps {
   title: string;
   description?: string;
+  onConfirm: () => void;
+  confirmLabel?: string;
+  cancelLabel?: string;
   children?: React.ReactNode;
 }
 
@@ -22,6 +27,9 @@ export function CustomAlertDialog({
   title,
   description,
   children,
+  confirmLabel = "Confirm",
+  cancelLabel = "Cancel",
+  onConfirm,
 }: CustomAlertDialogProps) {
   return (
     <AlertDialog>
@@ -34,8 +42,15 @@ export function CustomAlertDialog({
           <AlertDialogDescription>{description}</AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Cancelar</AlertDialogCancel>
-          <AlertDialogAction>Continuar</AlertDialogAction>
+          <AlertDialogCancel className="cursor-pointer">
+            {cancelLabel}
+          </AlertDialogCancel>
+          <AlertDialogAction
+            className="cursor-pointer bg-blue-800 hover:bg-blue-800/70"
+            onClick={onConfirm}
+          >
+            {confirmLabel}
+          </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
