@@ -1,8 +1,6 @@
 import { DataTable } from "@/components/data-table";
 import db from "@/lib/db";
-import { auth } from "@clerk/nextjs/server";
 import { Metadata } from "next";
-import { redirect } from "next/navigation";
 import { columns } from "./columns";
 
 export const metadata: Metadata = {
