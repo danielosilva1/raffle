@@ -5,6 +5,12 @@ import NotFound from "@/app/not-found";
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import { UpdateCampaignForm } from "./_components/update-campaign-form";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Editar campanha",
+  description: "Atualize os dados de uma campanha",
+};
 
 export default async function EditCampaign({
   params,

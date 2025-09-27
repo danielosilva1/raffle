@@ -3,7 +3,7 @@
 import { ClipboardCopy } from "@/components/clipboard-copy";
 import { CustomTooltip } from "@/components/custom-tooltip";
 import { Button } from "@/components/ui/button";
-import { Schema } from "@/lib/actions/create-campaign/types";
+import { Campaign } from "@/generated/prisma";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown, Copy, Pencil } from "lucide-react";
 import Link from "next/link";
@@ -12,10 +12,6 @@ const status: Record<string, string> = {
   active: "Ativa",
   closed: "Finalizada",
   cancelled: "Cancelada",
-};
-
-type Campaign = Schema & {
-  id: string;
 };
 
 export const columns: ColumnDef<Campaign>[] = [
