@@ -44,7 +44,7 @@ export const Navbar = () => {
           <CustomTooltip content="Veja todas as campanhas cadastradas">
             <NavbarButton
               label="Campanhas"
-              href="/my-supports"
+              href="/campaigns"
               icon={HeartHandshake}
               className="bg-cyan-600 text-white hover:bg-cyan-600/90"
             />
